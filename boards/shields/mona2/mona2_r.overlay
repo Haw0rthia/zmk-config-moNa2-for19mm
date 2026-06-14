@@ -68,15 +68,15 @@
     status = "okay";
     device = <&trackball_central>;
 
-    // ★ 通常時のマウスカーソル：左右(X)と上下(Y)を両方反転して正しい向きにする
+    // 通常時のマウスカーソル：左右(X)と上下(Y)を両方反転（これは正解なのでキープ）
     input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
 
     scroller {
         layers = <3>;
         input-processors = 
                            <&zip_xy_to_scroll_mapper>,                         // スクロールモードに変更
-                           // ★ スクロール：通常の上下反転の影響を打ち消し、現在の「正解」の状態を保つ
-                           <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+                           // ★ スクロールの反転設定を、一番最初のご提示コードと同じ状態に戻します ★
+                           <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,
                            <&zip_scroll_scaler 1 5>;                            // スクロール量を1/4倍
     };
 };
