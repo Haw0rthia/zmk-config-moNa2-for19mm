@@ -68,16 +68,15 @@
     status = "okay";
     device = <&trackball_central>;
 
-    // ★ 修正箇所: ここに通常時のX軸（左右）反転処理を追加します ★
-    input-processors = <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>;
+    // ★ 通常時のマウスカーソル：左右(X)と上下(Y)を両方反転して正しい向きにする
+    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
 
     scroller {
         layers = <3>;
         input-processors = 
-                           //<&zip_xy_transform INPUT_TRANSFORM_XY_SWAP>,        //X軸とY軸の入れ替え
-                           //<&zip_xy_transform INPUT_TRANSFORM_X_INVERT>,       //X軸反転
-                           <&zip_xy_to_scroll_mapper>,                         //スクロールモードに変更
-                           <&zip_scroll_transform INPUT_TRANSFORM_X_INVERT>,   //スクロールのX軸反転
-                           <&zip_scroll_scaler 1 5>;                            //スクロール量を1/4倍
+                           <&zip_xy_to_scroll_mapper>,                         // スクロールモードに変更
+                           // ★ スクロール：通常の上下反転の影響を打ち消し、現在の「正解」の状態を保つ
+                           <&zip_scroll_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+                           <&zip_scroll_scaler 1 5>;                            // スクロール量を1/4倍
     };
 };
