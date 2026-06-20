@@ -1,7 +1,7 @@
 if SHIELD_MONA2_R
 
 config ZMK_KEYBOARD_NAME
-    default "moNa2_teNt"
+    default "moNa2-TiltD19"
 
 config ZMK_BLE
     default y
